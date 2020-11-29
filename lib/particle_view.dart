@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:yokumiru_particle/particle/particle.dart';
 import 'package:yokumiru_particle/particle_state.dart';
@@ -66,19 +64,23 @@ class _ParticlePainter extends CustomPainter {
   _ParticlePainter({this.particles});
 
   static final _particlePaint = Paint()..color = Colors.white;
-  static final _linePaint = Paint()
-    ..color = Colors.lightBlue.shade300
-    ..strokeWidth = 1.0;
 
   @override
   void paint(Canvas canvas, Size size) {
     for (final particle in particles) {
-      final radius = particle.velocity.clamp(0.4, MAX_VELOCITY) * 2;
+      final radius = particle.velocity.clamp(0.4, MAX_VELOCITY);
       canvas.drawCircle(particle.position, radius, _particlePaint);
 
       for (final index in particle.nearbyParticles) {
+        final distance =
+            (particle.position.distance - particles[index].position.distance)
+                .abs();
+        final linkPaint = Paint()
+          ..color = Colors.white.withOpacity((1.0 - distance / NEARBY_RADIUS))
+          ..strokeWidth = 1.0;
+
         canvas.drawLine(
-            particle.position, particles[index].position, _linePaint);
+            particle.position, particles[index].position, linkPaint);
       }
     }
   }

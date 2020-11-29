@@ -6,7 +6,12 @@ import 'package:yokumiru_particle/particle/particle.dart';
 
 const MAX_PARTICLES = 60;
 const MAX_VELOCITY = 3.0;
-const NEARBY_RADIUS = 16.0;
+const NEARBY_RADIUS = 120.0;
+
+extension OffsetEx on Offset {
+  double distanceToOther(Offset other) =>
+      math.sqrt(math.pow((dx - other.dx), 2) + math.pow((dy - other.dy), 2));
+}
 
 class ParticleState {
   final Size screenSize;
@@ -74,8 +79,7 @@ class ParticleState {
       particles[index] = particles[index].copyWith(
         nearbyParticles: targets
             .where((e) =>
-                (e.position.distance - particles[index].position.distance)
-                    .abs() <
+                e.position.distanceToOther(particles[index].position) <
                 NEARBY_RADIUS)
             .map((e) => particles.indexOf(e))
             .toList(),
