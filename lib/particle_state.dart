@@ -2,38 +2,11 @@ import 'dart:ui';
 import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
+import 'package:yokumiru_particle/particle/particle.dart';
 
 const MAX_PARTICLES = 60;
 const MAX_VELOCITY = 3.0;
-
-@immutable
-class Particle {
-  final Offset position;
-  final double velocity;
-  final List<int> nearbyParticles;
-  final double angle;
-
-  Particle({
-    this.position,
-    this.velocity,
-    this.nearbyParticles,
-    this.angle,
-  });
-
-  Particle copyWith({
-    Offset position,
-    double velocity,
-    List<int> nearbyParticles,
-    double angle,
-  }) {
-    return Particle(
-      position: position ?? this.position,
-      velocity: velocity ?? this.velocity,
-      nearbyParticles: nearbyParticles ?? this.nearbyParticles,
-      angle: angle ?? this.angle,
-    );
-  }
-}
+const NEARBY_RADIUS = 16.0;
 
 class ParticleState {
   final Size screenSize;
@@ -94,8 +67,19 @@ class ParticleState {
       if (!screenSize.contains(particles[index].position)) {
         particles[index] = _generateNewParticle();
       }
+    }
 
-      // calculate nearby particles
+    for (int index = 0; index < MAX_PARTICLES; index++) {
+      final targets = particles.where((e) => e != particles[index]);
+      particles[index] = particles[index].copyWith(
+        nearbyParticles: targets
+            .where((e) =>
+                (e.position.distance - particles[index].position.distance)
+                    .abs() <
+                NEARBY_RADIUS)
+            .map((e) => particles.indexOf(e))
+            .toList(),
+      );
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:yokumiru_particle/particle/particle.dart';
 import 'package:yokumiru_particle/particle_state.dart';
 
 class ParticleView extends StatefulWidget {
@@ -65,12 +66,20 @@ class _ParticlePainter extends CustomPainter {
   _ParticlePainter({this.particles});
 
   static final _particlePaint = Paint()..color = Colors.white;
+  static final _linePaint = Paint()
+    ..color = Colors.lightBlue.shade300
+    ..strokeWidth = 1.0;
 
   @override
   void paint(Canvas canvas, Size size) {
     for (final particle in particles) {
-      final radius = particle.velocity.clamp(0.4, MAX_VELOCITY);
+      final radius = particle.velocity.clamp(0.4, MAX_VELOCITY) * 2;
       canvas.drawCircle(particle.position, radius, _particlePaint);
+
+      for (final index in particle.nearbyParticles) {
+        canvas.drawLine(
+            particle.position, particles[index].position, _linePaint);
+      }
     }
   }
 
