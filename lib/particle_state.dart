@@ -76,15 +76,34 @@ class ParticleState {
     throw AssertionError('Unexpected error: $this');
   }
 
-  void update() {
-    // TODO: implement update
+  Particle _advancePosition(Particle particle) {
+    final origin = particle.position;
+    switch (particle.direction) {
+      case AxisDirection.up:
+        return particle.copyWith(
+            position: origin.translate(0, -particle.velocity));
+      case AxisDirection.right:
+        return particle.copyWith(
+            position: origin.translate(particle.velocity, 0));
+      case AxisDirection.down:
+        return particle.copyWith(
+            position: origin.translate(0, particle.velocity));
+      case AxisDirection.left:
+        return particle.copyWith(
+            position: origin.translate(-particle.velocity, 0));
+    }
+    throw AssertionError('Unexpected error: $this');
+  }
 
+  void update() {
     for (int index = 0; index < MAX_PARTICLES; index++) {
-      // Advent particles
+      particles[index] = _advancePosition(particles[index]);
 
       if (!screenSize.contains(particles[index].position)) {
-        // generate new particle
+        particles[index] = _generateNewParticle();
       }
+
+      // calculate nearby particles
     }
   }
 }
