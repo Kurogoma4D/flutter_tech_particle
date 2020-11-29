@@ -41,7 +41,7 @@ class ParticleState {
 
   static final _random = math.Random();
 
-  ParticleState({this.screenSize}) {
+  ParticleState({@required this.screenSize}) {
     particles = List.generate(
       MAX_PARTICLES,
       (_) => _generateNewParticle(),

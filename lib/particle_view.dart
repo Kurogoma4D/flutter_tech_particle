@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:yokumiru_particle/particle_state.dart';
 
 class ParticleView extends StatefulWidget {
-  const ParticleView({Key key}) : super(key: key);
+  const ParticleView({Key key, this.screenSize}) : super(key: key);
+
+  final Size screenSize;
 
   @override
   _ParticleViewState createState() => _ParticleViewState();
@@ -10,14 +13,18 @@ class ParticleView extends StatefulWidget {
 class _ParticleViewState extends State<ParticleView>
     with SingleTickerProviderStateMixin {
   AnimationController baseAnimationController;
+  ParticleState state;
 
   @override
   void initState() {
     baseAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(days: 1),
-    )..forward();
+    )
+      ..addListener(() => state?.update())
+      ..forward();
 
+    state = ParticleState(screenSize: widget.screenSize);
     super.initState();
   }
 
@@ -39,11 +46,32 @@ class _ParticleViewState extends State<ParticleView>
         ),
         AnimatedBuilder(
           animation: baseAnimationController,
-          builder: (context, _) => Center(
-            child: Text('${baseAnimationController.value}'),
+          builder: (context, _) => CustomPaint(
+            size: widget.screenSize,
+            painter: _ParticlePainter(
+              particles: state.particles,
+            ),
           ),
         ),
       ],
     );
   }
+}
+
+class _ParticlePainter extends CustomPainter {
+  final List<Particle> particles;
+  _ParticlePainter({this.particles});
+
+  static final _particlePaint = Paint()..color = Colors.white;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    for (final particle in particles) {
+      final radius = particle.velocity.clamp(0.4, MAX_VELOCITY);
+      canvas.drawCircle(particle.position, radius, _particlePaint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }

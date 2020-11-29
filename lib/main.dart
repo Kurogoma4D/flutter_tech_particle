@@ -29,7 +29,12 @@ class BasePage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Expanded(child: const ParticleView()),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) =>
+                  ParticleView(screenSize: constraints.biggest),
+            ),
+          ),
           Expanded(
             child: Center(
               child: Text('Some Contents'),
