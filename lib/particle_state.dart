@@ -64,14 +64,14 @@ class ParticleState {
     switch (direction) {
       case AxisDirection.up:
         return Offset(
-            random.nextDouble() * screenSize.width, screenSize.height);
+            random.nextDouble() * screenSize.width, screenSize.height - 0.1);
       case AxisDirection.right:
         return Offset(0, random.nextDouble() * screenSize.height);
       case AxisDirection.down:
         return Offset(random.nextDouble() * screenSize.width, 0);
       case AxisDirection.left:
         return Offset(
-            screenSize.width, random.nextDouble() * screenSize.height);
+            screenSize.width - 0.1, random.nextDouble() * screenSize.height);
     }
     throw AssertionError('Unexpected error: $this');
   }
