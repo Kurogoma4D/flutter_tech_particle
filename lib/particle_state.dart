@@ -39,7 +39,7 @@ class ParticleState {
   final Size screenSize;
   List<Particle> particles;
 
-  static final random = math.Random();
+  static final _random = math.Random();
 
   ParticleState({this.screenSize}) {
     particles = List.generate(
@@ -49,9 +49,9 @@ class ParticleState {
   }
 
   Particle _generateNewParticle() {
-    final direction = AxisDirection.values[random.nextInt(4)];
+    final direction = AxisDirection.values[_random.nextInt(4)];
     final position = _generatePosition(direction);
-    final velocity = random.nextDouble() * MAX_VELOCITY + 0.5;
+    final velocity = _random.nextDouble() * MAX_VELOCITY + 0.5;
     return Particle(
       direction: direction,
       position: position,
@@ -64,14 +64,14 @@ class ParticleState {
     switch (direction) {
       case AxisDirection.up:
         return Offset(
-            random.nextDouble() * screenSize.width, screenSize.height - 0.1);
+            _random.nextDouble() * screenSize.width, screenSize.height - 0.1);
       case AxisDirection.right:
-        return Offset(0, random.nextDouble() * screenSize.height);
+        return Offset(0, _random.nextDouble() * screenSize.height);
       case AxisDirection.down:
-        return Offset(random.nextDouble() * screenSize.width, 0);
+        return Offset(_random.nextDouble() * screenSize.width, 0);
       case AxisDirection.left:
         return Offset(
-            screenSize.width - 0.1, random.nextDouble() * screenSize.height);
+            screenSize.width - 0.1, _random.nextDouble() * screenSize.height);
     }
     throw AssertionError('Unexpected error: $this');
   }
