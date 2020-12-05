@@ -10,10 +10,18 @@ abstract class Particle with _$Particle {
   const factory Particle({
     Offset position,
     double velocity,
-    List<int> nearbyParticles,
+    List<Distance> nearbyParticles,
 
     /// パーティクルの移動する方向．
     /// unit: radian
     double angle,
   }) = _Particle;
+}
+
+@freezed
+abstract class Distance with _$Distance {
+  const factory Distance({
+    Offset position,
+    double distance,
+  }) = _Distance;
 }

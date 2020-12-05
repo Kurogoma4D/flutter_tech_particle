@@ -76,13 +76,13 @@ class ParticleState {
 
     for (int index = 0; index < MAX_PARTICLES; index++) {
       final targets = particles.where((e) => e != particles[index]);
+      final distances = targets.map((e) => Distance(
+            position: e.position,
+            distance: e.position.distanceToOther(particles[index].position),
+          ));
       particles[index] = particles[index].copyWith(
-        nearbyParticles: targets
-            .where((e) =>
-                e.position.distanceToOther(particles[index].position) <
-                NEARBY_RADIUS)
-            .map((e) => particles.indexOf(e))
-            .toList(),
+        nearbyParticles:
+            distances.where((e) => e.distance < NEARBY_RADIUS).toList(),
       );
     }
   }

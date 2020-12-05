@@ -17,7 +17,7 @@ class _$ParticleTearOff {
   _Particle call(
       {Offset position,
       double velocity,
-      List<int> nearbyParticles,
+      List<Distance> nearbyParticles,
       double angle}) {
     return _Particle(
       position: position,
@@ -36,7 +36,7 @@ const $Particle = _$ParticleTearOff();
 mixin _$Particle {
   Offset get position;
   double get velocity;
-  List<int> get nearbyParticles;
+  List<Distance> get nearbyParticles;
 
   /// パーティクルの移動する方向．
   /// unit: radian
@@ -52,7 +52,7 @@ abstract class $ParticleCopyWith<$Res> {
   $Res call(
       {Offset position,
       double velocity,
-      List<int> nearbyParticles,
+      List<Distance> nearbyParticles,
       double angle});
 }
 
@@ -76,7 +76,7 @@ class _$ParticleCopyWithImpl<$Res> implements $ParticleCopyWith<$Res> {
       velocity: velocity == freezed ? _value.velocity : velocity as double,
       nearbyParticles: nearbyParticles == freezed
           ? _value.nearbyParticles
-          : nearbyParticles as List<int>,
+          : nearbyParticles as List<Distance>,
       angle: angle == freezed ? _value.angle : angle as double,
     ));
   }
@@ -90,7 +90,7 @@ abstract class _$ParticleCopyWith<$Res> implements $ParticleCopyWith<$Res> {
   $Res call(
       {Offset position,
       double velocity,
-      List<int> nearbyParticles,
+      List<Distance> nearbyParticles,
       double angle});
 }
 
@@ -115,7 +115,7 @@ class __$ParticleCopyWithImpl<$Res> extends _$ParticleCopyWithImpl<$Res>
       velocity: velocity == freezed ? _value.velocity : velocity as double,
       nearbyParticles: nearbyParticles == freezed
           ? _value.nearbyParticles
-          : nearbyParticles as List<int>,
+          : nearbyParticles as List<Distance>,
       angle: angle == freezed ? _value.angle : angle as double,
     ));
   }
@@ -131,7 +131,7 @@ class _$_Particle with DiagnosticableTreeMixin implements _Particle {
   @override
   final double velocity;
   @override
-  final List<int> nearbyParticles;
+  final List<Distance> nearbyParticles;
   @override
 
   /// パーティクルの移動する方向．
@@ -188,7 +188,7 @@ abstract class _Particle implements Particle {
   const factory _Particle(
       {Offset position,
       double velocity,
-      List<int> nearbyParticles,
+      List<Distance> nearbyParticles,
       double angle}) = _$_Particle;
 
   @override
@@ -196,7 +196,7 @@ abstract class _Particle implements Particle {
   @override
   double get velocity;
   @override
-  List<int> get nearbyParticles;
+  List<Distance> get nearbyParticles;
   @override
 
   /// パーティクルの移動する方向．
@@ -204,4 +204,142 @@ abstract class _Particle implements Particle {
   double get angle;
   @override
   _$ParticleCopyWith<_Particle> get copyWith;
+}
+
+/// @nodoc
+class _$DistanceTearOff {
+  const _$DistanceTearOff();
+
+// ignore: unused_element
+  _Distance call({Offset position, double distance}) {
+    return _Distance(
+      position: position,
+      distance: distance,
+    );
+  }
+}
+
+/// @nodoc
+// ignore: unused_element
+const $Distance = _$DistanceTearOff();
+
+/// @nodoc
+mixin _$Distance {
+  Offset get position;
+  double get distance;
+
+  $DistanceCopyWith<Distance> get copyWith;
+}
+
+/// @nodoc
+abstract class $DistanceCopyWith<$Res> {
+  factory $DistanceCopyWith(Distance value, $Res Function(Distance) then) =
+      _$DistanceCopyWithImpl<$Res>;
+  $Res call({Offset position, double distance});
+}
+
+/// @nodoc
+class _$DistanceCopyWithImpl<$Res> implements $DistanceCopyWith<$Res> {
+  _$DistanceCopyWithImpl(this._value, this._then);
+
+  final Distance _value;
+  // ignore: unused_field
+  final $Res Function(Distance) _then;
+
+  @override
+  $Res call({
+    Object position = freezed,
+    Object distance = freezed,
+  }) {
+    return _then(_value.copyWith(
+      position: position == freezed ? _value.position : position as Offset,
+      distance: distance == freezed ? _value.distance : distance as double,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$DistanceCopyWith<$Res> implements $DistanceCopyWith<$Res> {
+  factory _$DistanceCopyWith(_Distance value, $Res Function(_Distance) then) =
+      __$DistanceCopyWithImpl<$Res>;
+  @override
+  $Res call({Offset position, double distance});
+}
+
+/// @nodoc
+class __$DistanceCopyWithImpl<$Res> extends _$DistanceCopyWithImpl<$Res>
+    implements _$DistanceCopyWith<$Res> {
+  __$DistanceCopyWithImpl(_Distance _value, $Res Function(_Distance) _then)
+      : super(_value, (v) => _then(v as _Distance));
+
+  @override
+  _Distance get _value => super._value as _Distance;
+
+  @override
+  $Res call({
+    Object position = freezed,
+    Object distance = freezed,
+  }) {
+    return _then(_Distance(
+      position: position == freezed ? _value.position : position as Offset,
+      distance: distance == freezed ? _value.distance : distance as double,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_Distance with DiagnosticableTreeMixin implements _Distance {
+  const _$_Distance({this.position, this.distance});
+
+  @override
+  final Offset position;
+  @override
+  final double distance;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Distance(position: $position, distance: $distance)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Distance'))
+      ..add(DiagnosticsProperty('position', position))
+      ..add(DiagnosticsProperty('distance', distance));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Distance &&
+            (identical(other.position, position) ||
+                const DeepCollectionEquality()
+                    .equals(other.position, position)) &&
+            (identical(other.distance, distance) ||
+                const DeepCollectionEquality()
+                    .equals(other.distance, distance)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(position) ^
+      const DeepCollectionEquality().hash(distance);
+
+  @override
+  _$DistanceCopyWith<_Distance> get copyWith =>
+      __$DistanceCopyWithImpl<_Distance>(this, _$identity);
+}
+
+abstract class _Distance implements Distance {
+  const factory _Distance({Offset position, double distance}) = _$_Distance;
+
+  @override
+  Offset get position;
+  @override
+  double get distance;
+  @override
+  _$DistanceCopyWith<_Distance> get copyWith;
 }

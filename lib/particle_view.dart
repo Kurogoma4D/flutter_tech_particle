@@ -68,19 +68,16 @@ class _ParticlePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     for (final particle in particles) {
-      final radius = particle.velocity.clamp(0.4, MAX_VELOCITY);
+      final radius = particle.velocity.clamp(0.4, MAX_VELOCITY) * 2.0;
       canvas.drawCircle(particle.position, radius, _particlePaint);
 
-      for (final index in particle.nearbyParticles) {
-        final distance =
-            (particle.position.distance - particles[index].position.distance)
-                .abs();
+      for (final nearby in particle.nearbyParticles) {
         final linkPaint = Paint()
-          ..color = Colors.white.withOpacity((1.0 - distance / NEARBY_RADIUS))
+          ..color =
+              Colors.white.withOpacity(1.0 - (nearby.distance / NEARBY_RADIUS))
           ..strokeWidth = 1.0;
 
-        canvas.drawLine(
-            particle.position, particles[index].position, linkPaint);
+        canvas.drawLine(particle.position, nearby.position, linkPaint);
       }
     }
   }
