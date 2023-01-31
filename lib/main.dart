@@ -27,20 +27,9 @@ class BasePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Particles.'),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: LayoutBuilder(
-              builder: (context, constraints) =>
-                  ParticleView(screenSize: constraints.biggest),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text('Some Contents'),
-            ),
-          ),
-        ],
+      body: LayoutBuilder(
+        builder: (context, constraints) =>
+            ParticleView(screenSize: constraints.biggest),
       ),
     );
   }

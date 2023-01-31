@@ -45,7 +45,6 @@ class _ParticleViewState extends State<ParticleView>
         AnimatedBuilder(
           animation: baseAnimationController,
           builder: (context, _) => CustomPaint(
-            size: widget.screenSize,
             painter: _ParticlePainter(
               particles: state.particles,
             ),
