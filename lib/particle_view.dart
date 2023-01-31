@@ -42,12 +42,10 @@ class _ParticleViewState extends State<ParticleView>
             ),
           ),
         ),
-        AnimatedBuilder(
-          animation: baseAnimationController,
-          builder: (context, _) => CustomPaint(
-            painter: _ParticlePainter(
-              particles: state.particles,
-            ),
+        CustomPaint(
+          painter: _ParticlePainter(
+            particles: state.particles,
+            controller: baseAnimationController,
           ),
         ),
       ],
@@ -57,7 +55,11 @@ class _ParticleViewState extends State<ParticleView>
 
 class _ParticlePainter extends CustomPainter {
   final List<Particle> particles;
-  _ParticlePainter({required this.particles});
+  final AnimationController controller;
+  _ParticlePainter({
+    required this.particles,
+    required this.controller,
+  }) : super(repaint: controller);
 
   static final _particlePaint = Paint()..color = Colors.white;
 
