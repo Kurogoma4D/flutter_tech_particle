@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'dart:math' as math;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:yokumiru_particle/particle/particle.dart';
 
@@ -15,11 +14,11 @@ extension OffsetEx on Offset {
 
 class ParticleState {
   final Size screenSize;
-  List<Particle> particles;
+  List<Particle> particles = [];
 
   static final _random = math.Random();
 
-  ParticleState({@required this.screenSize}) {
+  ParticleState({required this.screenSize}) {
     particles = List.generate(
       MAX_PARTICLES,
       (_) => _generateNewParticle(),

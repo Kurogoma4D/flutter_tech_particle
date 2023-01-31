@@ -3,7 +3,7 @@ import 'package:yokumiru_particle/particle/particle.dart';
 import 'package:yokumiru_particle/particle_state.dart';
 
 class ParticleView extends StatefulWidget {
-  const ParticleView({Key key, this.screenSize}) : super(key: key);
+  const ParticleView({super.key, required this.screenSize});
 
   final Size screenSize;
 
@@ -13,19 +13,16 @@ class ParticleView extends StatefulWidget {
 
 class _ParticleViewState extends State<ParticleView>
     with SingleTickerProviderStateMixin {
-  AnimationController baseAnimationController;
-  ParticleState state;
+  late final baseAnimationController = AnimationController(
+    vsync: this,
+    duration: const Duration(days: 1),
+  )
+    ..addListener(() => state.update())
+    ..forward();
+  late final state = ParticleState(screenSize: widget.screenSize);
 
   @override
   void initState() {
-    baseAnimationController = AnimationController(
-      vsync: this,
-      duration: const Duration(days: 1),
-    )
-      ..addListener(() => state?.update())
-      ..forward();
-
-    state = ParticleState(screenSize: widget.screenSize);
     super.initState();
   }
 
@@ -61,7 +58,7 @@ class _ParticleViewState extends State<ParticleView>
 
 class _ParticlePainter extends CustomPainter {
   final List<Particle> particles;
-  _ParticlePainter({this.particles});
+  _ParticlePainter({required this.particles});
 
   static final _particlePaint = Paint()..color = Colors.white;
 
